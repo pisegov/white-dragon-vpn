@@ -1,4 +1,4 @@
-package com.example.whitedragonvpn
+package com.example.whitedragonvpn.ui.base_fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
