@@ -1,12 +1,14 @@
 package com.example.whitedragonvpn.ui.base_fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.databinding.FragmentFirstBinding
+import com.example.whitedragonvpn.ioc.BaseFragmentComponent
+import com.example.whitedragonvpn.ioc.BaseFragmentViewComponent
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -19,12 +21,30 @@ class FirstFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
+    private val applicationComponent
+        get() = App.get(requireContext()).applicationComponent
+    private lateinit var fragmentComponent: BaseFragmentComponent
+    private var fragmentViewComponent: BaseFragmentViewComponent? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fragmentComponent = BaseFragmentComponent(
+            applicationComponent,
+            this,
+        )
+    }
+
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
+
+        fragmentViewComponent = BaseFragmentViewComponent(fragmentComponent, binding.root)
+
         return binding.root
 
     }
@@ -33,7 +53,7 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            fragmentViewComponent?.baseViewController?.connectToVpn()
         }
     }
 
