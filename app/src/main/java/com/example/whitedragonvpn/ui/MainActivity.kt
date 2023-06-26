@@ -1,5 +1,6 @@
 package com.example.whitedragonvpn.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -9,10 +10,16 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
+import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.databinding.ActivityMainBinding
+import com.example.whitedragonvpn.ui.base_fragment.VpnConnectionSwitch
+import com.wireguard.android.backend.GoBackend
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    VpnConnectionSwitch {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -52,5 +59,18 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onSwitchClicked() {
+
+        val tunnelManager = App.get(this).applicationComponent.tunnelManager
+
+        lifecycleScope.launch {
+            val intentPrepare: Intent? = GoBackend.VpnService.prepare(this@MainActivity)
+            intentPrepare?.let { intent ->
+                startActivityIfNeeded(intent, 0)
+            }
+            tunnelManager.setTunnelUp()
+        }
     }
 }

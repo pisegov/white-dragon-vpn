@@ -1,14 +1,15 @@
 package com.example.whitedragonvpn.ioc
 
-import android.view.View
+import androidx.viewbinding.ViewBinding
+import com.example.whitedragonvpn.databinding.FragmentBaseBinding
 
 class BaseFragmentViewComponent(
     fragmentComponent: BaseFragmentComponent,
-    root: View,
+    viewBinding: ViewBinding,
 ) {
 
     val baseViewController = BaseFragmentController(
         fragmentComponent.fragment.requireActivity(),
-        rootView = root
+        viewBinding = viewBinding as FragmentBaseBinding
     )
 }
