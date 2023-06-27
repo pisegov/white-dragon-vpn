@@ -1,5 +1,6 @@
 package com.example.whitedragonvpn.vpn
 
+import androidx.lifecycle.LiveData
 import com.example.whitedragonvpn.data.ConfigRepository
 import com.wireguard.android.backend.Backend
 import com.wireguard.android.backend.Tunnel
@@ -10,11 +11,11 @@ import kotlinx.coroutines.withContext
 class TunnelManager(
     private val backend: Backend,
     configRepository: ConfigRepository
-) {
-    private val tunnel: Tunnel = WgTunnel()
+) : TunnelLauncher {
+    private val tunnel = WgTunnel()
     private val config: Config = configRepository.getConfig()
 
-    suspend fun setTunnelUp() {
+    override suspend fun setTunnelUp() {
         withContext(Dispatchers.IO) {
             try {
                 backend.setState(
@@ -27,5 +28,9 @@ class TunnelManager(
                 e.printStackTrace()
             }
         }
+    }
+
+    fun getTunnelStateObservable(): LiveData<Tunnel.State> {
+        return tunnel.state
     }
 }

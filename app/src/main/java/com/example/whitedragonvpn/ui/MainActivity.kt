@@ -63,14 +63,14 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSwitchClicked() {
 
-        val tunnelManager = App.get(this).applicationComponent.tunnelManager
+        val tunnelLauncher = App.get(this).applicationComponent.tunnelLauncher
 
         lifecycleScope.launch {
             val intentPrepare: Intent? = GoBackend.VpnService.prepare(this@MainActivity)
             intentPrepare?.let { intent ->
                 startActivityIfNeeded(intent, 0)
             }
-            tunnelManager.setTunnelUp()
+            tunnelLauncher.setTunnelUp()
         }
     }
 }
