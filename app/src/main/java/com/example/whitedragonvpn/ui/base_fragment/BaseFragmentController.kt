@@ -1,9 +1,10 @@
 package com.example.whitedragonvpn.ui.base_fragment
 
 import android.app.Activity
-import android.graphics.Color
 import androidx.lifecycle.LifecycleOwner
+import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.databinding.FragmentBaseBinding
+import com.example.whitedragonvpn.ui.base_fragment.model.SwitchButtonState
 import com.wireguard.android.backend.Tunnel
 
 class BaseFragmentController(
@@ -14,18 +15,30 @@ class BaseFragmentController(
 ) {
     private val connectionSwitch: VpnConnectionSwitch = activity as VpnConnectionSwitch
     fun setupViews() {
-        viewBinding.buttonFirst.setOnClickListener {
+
+        val switchButton = viewBinding.buttonFirst
+        switchButton.setOnClickListener {
             connectionSwitch.onSwitchClicked()
         }
 
         viewModel.getCurrentTunnelState().observe(lifecycleOwner) { state ->
-            val colorsMap: Map<Tunnel.State, Int> = mapOf(
-                Tunnel.State.UP to Color.CYAN,
-                Tunnel.State.DOWN to Color.parseColor("#D0BCFF")
+            val switchButtonStateAdapterMap: Map<Tunnel.State, SwitchButtonState> = mapOf(
+                Tunnel.State.UP to SwitchButtonState(
+                    R.color.switch_button_connected,
+                    R.string.connected
+                ),
+                Tunnel.State.DOWN to SwitchButtonState(
+                    R.color.switch_button_disconnected,
+                    R.string.connect
+                ),
             )
 
-            colorsMap[state]?.let {
-                viewBinding.buttonFirst.setBackgroundColor(it)
+            switchButtonStateAdapterMap[state]?.let { buttonState ->
+                switchButton.apply {
+                    setBackgroundColor(resources.getColor(buttonState.color))
+
+                    setText(buttonState.stringId)
+                }
             }
         }
     }

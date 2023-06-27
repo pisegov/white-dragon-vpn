@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="switch_button_connected">#00BCD4</color>
+    <color name="switch_button_disconnected">#D0BCFF</color>
 </resources>

@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(),
             intentPrepare?.let { intent ->
                 startActivityIfNeeded(intent, 0)
             }
-            tunnelLauncher.setTunnelUp()
+            tunnelLauncher.toggleTunnelState()
         }
     }
 }

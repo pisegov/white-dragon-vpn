@@ -10,17 +10,28 @@ import kotlinx.coroutines.withContext
 
 class TunnelManager(
     private val backend: Backend,
-    configRepository: ConfigRepository
+    private val configRepository: ConfigRepository
 ) : TunnelLauncher {
     private val tunnel = WgTunnel()
-    private val config: Config = configRepository.getConfig()
 
-    override suspend fun setTunnelUp() {
+    override suspend fun toggleTunnelState(): Unit =
         withContext(Dispatchers.IO) {
+            var config: Config? = null
+            val newState = when (tunnel.state.value) {
+                Tunnel.State.DOWN -> {
+                    config = configRepository.getConfig()
+                    Tunnel.State.UP
+                }
+
+                else -> {
+                    config = null
+                    Tunnel.State.DOWN
+                }
+            }
             try {
                 backend.setState(
                     tunnel,
-                    Tunnel.State.UP,
+                    newState,
                     config
                 )
 
@@ -28,7 +39,6 @@ class TunnelManager(
                 e.printStackTrace()
             }
         }
-    }
 
     fun getTunnelStateObservable(): LiveData<Tunnel.State> {
         return tunnel.state
