@@ -10,11 +10,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.R
+import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
 import com.example.whitedragonvpn.databinding.ActivityMainBinding
 import com.example.whitedragonvpn.ui.base_fragment.VpnConnectionSwitch
+import com.example.whitedragonvpn.utils.NetworkErrorHolder
 import com.wireguard.android.backend.GoBackend
 import kotlinx.coroutines.launch
 
@@ -37,6 +40,10 @@ class MainActivity : AppCompatActivity(),
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        NetworkErrorHolder.error.observe(this) {
+            val error = it as NetworkResult.GenericError
+            Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

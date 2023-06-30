@@ -16,11 +16,13 @@ class TunnelManager(
 
     override suspend fun toggleTunnelState(): Unit =
         withContext(Dispatchers.IO) {
-            var config: Config? = null
+            val config: Config?
             val newState = when (tunnel.state.value) {
                 Tunnel.State.DOWN -> {
                     config = configRepository.getConfig()
-                    Tunnel.State.UP
+                    config?.let {
+                        Tunnel.State.UP
+                    } ?: Tunnel.State.DOWN
                 }
 
                 else -> {
