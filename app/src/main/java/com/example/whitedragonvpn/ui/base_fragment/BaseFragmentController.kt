@@ -2,6 +2,7 @@ package com.example.whitedragonvpn.ui.base_fragment
 
 import android.app.Activity
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.Navigation.findNavController
 import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.databinding.FragmentBaseBinding
 import com.example.whitedragonvpn.ui.base_fragment.model.SwitchButtonState
@@ -21,6 +22,9 @@ class BaseFragmentController(
             connectionSwitch.onSwitchClicked()
         }
 
+        viewBinding.btnNextFragment.setOnClickListener {
+            findNavController(viewBinding.root).navigate(R.id.action_BaseFragment_to_CountriesFragment)
+        }
         viewModel.getCurrentTunnelState().observe(lifecycleOwner) { state ->
             val switchButtonStateAdapterMap: Map<Tunnel.State, SwitchButtonState> = mapOf(
                 Tunnel.State.UP to SwitchButtonState(
