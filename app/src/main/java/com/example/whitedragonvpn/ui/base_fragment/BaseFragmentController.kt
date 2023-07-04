@@ -32,15 +32,14 @@ class BaseFragmentController(
                     R.string.connected
                 ),
                 Tunnel.State.DOWN to SwitchButtonState(
-                    R.color.switch_button_disconnected,
+                    R.color.primary,
                     R.string.connect
                 ),
             )
 
             switchButtonStateAdapterMap[state]?.let { buttonState ->
                 switchButton.apply {
-                    setBackgroundColor(resources.getColor(buttonState.color))
-
+                    setBackgroundColor(resources.getColor(buttonState.color, activity.theme))
                     setText(buttonState.stringId)
                 }
             }

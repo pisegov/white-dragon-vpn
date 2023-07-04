@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="switch_button_connected">#00BCD4</color>
-    <color name="switch_button_disconnected">#D0BCFF</color>
+    <color name="black">#020104</color>
+    <color name="white">#f7f7f6</color>
+    <color name="primary">@color/black</color>
+    <color name="switch_button_connected">#5e75ab</color>
+    <color name="transparent">#00F44336</color>
 </resources>
