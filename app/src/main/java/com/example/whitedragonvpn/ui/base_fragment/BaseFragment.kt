@@ -10,6 +10,7 @@ import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.databinding.FragmentBaseBinding
 import com.example.whitedragonvpn.ioc.BaseFragmentComponent
 import com.example.whitedragonvpn.ioc.BaseFragmentViewComponent
+import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 
 class BaseFragment : Fragment() {
 

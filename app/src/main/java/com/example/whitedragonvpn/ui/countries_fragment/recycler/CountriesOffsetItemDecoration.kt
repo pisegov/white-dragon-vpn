@@ -1,4 +1,4 @@
-package com.example.whitedragonvpn.ui.countries_fragment
+package com.example.whitedragonvpn.ui.countries_fragment.recycler
 
 import android.graphics.Rect
 import android.view.View

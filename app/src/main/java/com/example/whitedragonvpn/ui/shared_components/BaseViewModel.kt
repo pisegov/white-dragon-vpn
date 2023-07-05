@@ -1,4 +1,4 @@
-package com.example.whitedragonvpn.ui.base_fragment
+package com.example.whitedragonvpn.ui.shared_components
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

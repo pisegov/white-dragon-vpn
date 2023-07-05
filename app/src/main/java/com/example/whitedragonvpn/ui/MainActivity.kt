@@ -16,7 +16,7 @@ import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
 import com.example.whitedragonvpn.databinding.ActivityMainBinding
-import com.example.whitedragonvpn.ui.base_fragment.VpnConnectionSwitch
+import com.example.whitedragonvpn.ui.shared_components.VpnConnectionSwitch
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
 import com.wireguard.android.backend.GoBackend
 import kotlinx.coroutines.launch

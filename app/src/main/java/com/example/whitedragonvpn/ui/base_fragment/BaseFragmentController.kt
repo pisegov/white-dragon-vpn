@@ -6,6 +6,8 @@ import androidx.navigation.Navigation.findNavController
 import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.databinding.FragmentBaseBinding
 import com.example.whitedragonvpn.ui.base_fragment.model.SwitchButtonState
+import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
+import com.example.whitedragonvpn.ui.shared_components.VpnConnectionSwitch
 import com.wireguard.android.backend.Tunnel
 
 class BaseFragmentController(

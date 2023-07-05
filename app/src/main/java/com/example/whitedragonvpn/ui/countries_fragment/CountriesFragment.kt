@@ -1,19 +1,17 @@
 package com.example.whitedragonvpn.ui.countries_fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.databinding.FragmentCountriesBinding
-import com.example.whitedragonvpn.ui.countries_fragment.model.CountryItem
-import com.example.whitedragonvpn.utils.px
+import com.example.whitedragonvpn.ioc.CountriesFragmentComponent
+import com.example.whitedragonvpn.ioc.CountriesFragmentViewComponent
+import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 
-/**
- * A simple [Fragment] subclass as the Countries destination in the navigation.
- */
 class CountriesFragment : Fragment() {
 
     private var _binding: FragmentCountriesBinding? = null
@@ -22,32 +20,31 @@ class CountriesFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    lateinit var countriesRecyclerView: RecyclerView
+    private val applicationComponent
+        get() = App.get(requireContext()).applicationComponent
+    private lateinit var fragmentComponent: CountriesFragmentComponent
+    private var fragmentViewComponent: CountriesFragmentViewComponent? = null
+    private val viewModel: BaseViewModel by viewModels { applicationComponent.viewModelFactory }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fragmentComponent = CountriesFragmentComponent(applicationComponent, this, viewModel)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCountriesBinding.inflate(inflater, container, false)
+
+        fragmentViewComponent =
+            CountriesFragmentViewComponent(fragmentComponent, binding, viewLifecycleOwner)
+                .apply {
+                    countriesViewController.setupViews()
+                }
+
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        countriesRecyclerView = binding.rwCountriesRecycler
-        val countriesAdapter = CountriesAdapter()
-
-        countriesRecyclerView.apply {
-            adapter = countriesAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            addItemDecoration(CountriesOffsetItemDecoration(bottomOffset = 12.px))
-        }
-        countriesAdapter.countriesList = listOf(
-            CountryItem("Netherlands", true),
-            CountryItem("Russia", false),
-        )
     }
 
     override fun onDestroyView() {

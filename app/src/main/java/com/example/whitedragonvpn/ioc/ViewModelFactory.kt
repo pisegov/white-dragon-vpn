@@ -2,11 +2,11 @@ package com.example.whitedragonvpn.ioc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.whitedragonvpn.ui.base_fragment.BaseViewModel
+import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 import com.example.whitedragonvpn.vpn.TunnelManager
 
-@Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val tunnelManager: TunnelManager) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
             BaseViewModel::class.java -> BaseViewModel(tunnelManager)
