@@ -14,7 +14,9 @@ class CountriesViewHolder(
 
     init {
         binding.switchCountryChecked.setOnCheckedChangeListener { switch, state ->
-            switchListener(currentCountry, state)
+            if (switch.isPressed) {
+                switchListener(currentCountry, state)
+            }
         }
     }
 

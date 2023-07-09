@@ -4,6 +4,8 @@ import com.example.whitedragonvpn.data.ConfigRepository
 import com.example.whitedragonvpn.data.remote.retrofit.NetworkConfigSource
 import com.example.whitedragonvpn.vpn.TunnelLauncher
 import com.example.whitedragonvpn.vpn.TunnelManager
+import com.example.whitedragonvpn.vpn.TunnelStateProvider
+import com.example.whitedragonvpn.vpn.WgTunnel
 import com.wireguard.android.backend.Backend
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -11,8 +13,10 @@ import kotlinx.serialization.ExperimentalSerializationApi
 class ApplicationComponent(wgBackend: Backend) {
     private val networkConfigSource = NetworkConfigSource()
     private val configRepository = ConfigRepository(networkConfigSource)
-    private val tunnelManager = TunnelManager(wgBackend, configRepository)
-    val tunnelLauncher: TunnelLauncher = tunnelManager
+    private val tunnel = WgTunnel()
+    private val tunnelStateProvider = TunnelStateProvider(tunnel)
+    private val tunnelManager = TunnelManager(wgBackend, configRepository, tunnel)
 
-    val viewModelFactory = ViewModelFactory(tunnelManager)
+    val tunnelLauncher: TunnelLauncher = tunnelManager
+    val viewModelFactory = ViewModelFactory(tunnelManager, tunnelStateProvider)
 }

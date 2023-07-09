@@ -25,6 +25,10 @@ object RetrofitModule {
         .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
-
     val configApi: ConfigApi = retrofit.create<ConfigApi>()
+
+
+    fun clearConnectionPool() {
+        httpClient.connectionPool.evictAll()
+    }
 }

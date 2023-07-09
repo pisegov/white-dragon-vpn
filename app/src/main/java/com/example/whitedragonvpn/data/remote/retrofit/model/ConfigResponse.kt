@@ -8,5 +8,6 @@ data class ConfigResponse(
     val peerPrivateKey: String,
     val endpoint: String,
     val allowedIps: String,
-    val serverPublicKey: String
+    val serverPublicKey: String,
+    val countryCode: String,
 )

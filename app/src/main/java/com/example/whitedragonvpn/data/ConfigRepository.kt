@@ -4,11 +4,6 @@ import com.example.whitedragonvpn.data.model.ConfigModel
 import com.example.whitedragonvpn.data.remote.retrofit.NetworkConfigSource
 import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
-import com.wireguard.config.Config
-import com.wireguard.config.InetEndpoint
-import com.wireguard.config.InetNetwork
-import com.wireguard.config.Interface
-import com.wireguard.config.Peer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -17,15 +12,9 @@ import java.io.IOException
 
 @OptIn(ExperimentalSerializationApi::class)
 class ConfigRepository(private val networkConfigSource: NetworkConfigSource) {
-    suspend fun getConfig(): Config? {
-        val configModel = getNetworkConfig()
-        return configModel?.let { config ->
-            buildConfig(config)
-        }
-    }
 
-    private suspend fun getNetworkConfig(): ConfigModel? {
-        val networkResult = safeApiCall { networkConfigSource.getConfig() }
+    suspend fun getConfig(countryCode: String): ConfigModel? {
+        val networkResult = safeApiCall { networkConfigSource.getConfig(countryCode) }
         return when (networkResult) {
             is NetworkResult.Success -> networkResult.data
             else -> {
@@ -33,26 +22,6 @@ class ConfigRepository(private val networkConfigSource: NetworkConfigSource) {
                 null
             }
         }
-    }
-
-    private fun buildConfig(configModel: ConfigModel): Config {
-        val interfaceBuilder = Interface.Builder()
-        val peerBuilder = Peer.Builder()
-        return Config.Builder()
-            .setInterface(
-                interfaceBuilder.addAddress(InetNetwork.parse(configModel.address))
-                    .parsePrivateKey(configModel.peerPrivateKey)
-                    .build()
-            )
-            .addPeer(
-                peerBuilder.addAllowedIp(InetNetwork.parse(configModel.allowedIps))
-                    .setEndpoint(
-                        InetEndpoint.parse(configModel.endpoint)
-                    ).parsePublicKey(configModel.serverPublicKey)
-                    .setPersistentKeepalive(20)
-                    .build()
-            )
-            .build()
     }
 
     private suspend fun <T : Any> safeApiCall(

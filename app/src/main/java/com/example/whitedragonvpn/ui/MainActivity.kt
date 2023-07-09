@@ -19,6 +19,7 @@ import com.example.whitedragonvpn.databinding.ActivityMainBinding
 import com.example.whitedragonvpn.ui.shared_components.VpnConnectionSwitch
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
 import com.wireguard.android.backend.GoBackend
+import com.wireguard.android.backend.Tunnel
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(),
@@ -68,16 +69,27 @@ class MainActivity : AppCompatActivity(),
                 || super.onSupportNavigateUp()
     }
 
+    private fun showVpnDialog() {
+        val intentPrepare: Intent? = GoBackend.VpnService.prepare(this)
+        intentPrepare?.let { intent ->
+            startActivityIfNeeded(intent, 0)
+        }
+    }
+
+    private val tunnelLauncher
+        get() = App.get(this).applicationComponent.tunnelLauncher
+
     override fun onSwitchClicked() {
-
-        val tunnelLauncher = App.get(this).applicationComponent.tunnelLauncher
-
+        showVpnDialog()
         lifecycleScope.launch {
-            val intentPrepare: Intent? = GoBackend.VpnService.prepare(this@MainActivity)
-            intentPrepare?.let { intent ->
-                startActivityIfNeeded(intent, 0)
-            }
             tunnelLauncher.toggleTunnelState()
+        }
+    }
+
+    override fun onSwitchClicked(state: Tunnel.State, countryCode: String) {
+        showVpnDialog()
+        lifecycleScope.launch {
+            tunnelLauncher.switchTunnelState(state, countryCode)
         }
     }
 }

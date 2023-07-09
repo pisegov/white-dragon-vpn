@@ -7,15 +7,17 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
 class NetworkConfigSource {
-    suspend fun getConfig(): ConfigModel =
+    suspend fun getConfig(countryCode: String): ConfigModel =
         withContext(Dispatchers.IO) {
-            val response = RetrofitModule.configApi.getConfiguration()
+            val response = RetrofitModule.configApi.getConfiguration(countryCode)
+
             return@withContext ConfigModel(
                 address = response.address,
                 peerPrivateKey = response.peerPrivateKey,
                 endpoint = response.endpoint,
                 allowedIps = response.allowedIps,
-                serverPublicKey = response.serverPublicKey
+                serverPublicKey = response.serverPublicKey,
+                countryCode = response.countryCode
             )
         }
 }
