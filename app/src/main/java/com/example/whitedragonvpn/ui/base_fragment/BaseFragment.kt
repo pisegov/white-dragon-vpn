@@ -29,7 +29,7 @@ class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fragmentComponent = DaggerBaseFragmentComponent.factory()
-            .create(fragment = this)
+            .create(applicationComponent = applicationComponent, fragment = this)
     }
 
     override fun onCreateView(
@@ -41,7 +41,7 @@ class BaseFragment : Fragment() {
 
 
         fragmentViewComponent = DaggerBaseFragmentViewComponent.factory()
-            .create(fragmentComponent, binding, viewLifecycleOwner)
+            .create(fragmentComponent, binding, viewLifecycleOwner, viewModel)
             .apply {
                 baseFragmentViewController.setupViews()
             }

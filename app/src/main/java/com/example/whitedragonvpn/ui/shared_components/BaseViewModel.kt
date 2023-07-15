@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.example.whitedragonvpn.vpn.TunnelManager
 import com.example.whitedragonvpn.vpn.TunnelStateProvider
 import com.wireguard.android.backend.Tunnel
+import javax.inject.Inject
 
-class BaseViewModel(
+class BaseViewModel @Inject constructor(
     private val tunnelManager: TunnelManager,
     private val stateProvider: TunnelStateProvider
 ) : ViewModel() {

@@ -3,6 +3,7 @@ package com.example.whitedragonvpn.vpn
 import com.example.whitedragonvpn.data.ConfigRepository
 import com.example.whitedragonvpn.data.model.ConfigModel
 import com.example.whitedragonvpn.data.remote.retrofit.RetrofitModule
+import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.wireguard.android.backend.Backend
 import com.wireguard.android.backend.Tunnel
 import com.wireguard.config.Config
@@ -13,8 +14,10 @@ import com.wireguard.config.Peer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
+import javax.inject.Inject
 
-class TunnelManager(
+@ApplicationScope
+class TunnelManager @Inject constructor(
     private val backend: Backend,
     private val configRepository: ConfigRepository,
     private val tunnel: WgTunnel

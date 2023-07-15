@@ -3,15 +3,18 @@ package com.example.whitedragonvpn.data
 import com.example.whitedragonvpn.data.model.ConfigModel
 import com.example.whitedragonvpn.data.remote.retrofit.NetworkConfigSource
 import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
+import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 @OptIn(ExperimentalSerializationApi::class)
-class ConfigRepository(private val networkConfigSource: NetworkConfigSource) {
+@ApplicationScope
+class ConfigRepository @Inject constructor(private val networkConfigSource: NetworkConfigSource) {
 
     suspend fun getConfig(countryCode: String): ConfigModel? {
         val networkResult = safeApiCall { networkConfigSource.getConfig(countryCode) }

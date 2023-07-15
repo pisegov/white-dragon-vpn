@@ -15,6 +15,6 @@ class CountriesFragmentViewComponent(
         fragmentComponent.fragment.requireActivity(),
         viewBinding = viewBinding as FragmentCountriesBinding,
         lifecycleOwner,
-        viewModel = fragmentComponent.viewModel
+//        viewModel = fragmentComponent.viewModel
     )
 }

@@ -19,7 +19,7 @@ class CountriesFragmentController(
     private val activity: Activity,
     private val viewBinding: FragmentCountriesBinding,
     private val lifecycleOwner: LifecycleOwner,
-    private val viewModel: BaseViewModel
+//    private val viewModel: BaseViewModel
 ) {
 
     private val connectionSwitch: VpnConnectionSwitch = activity as VpnConnectionSwitch
@@ -39,18 +39,18 @@ class CountriesFragmentController(
     }
 
     private fun setupObservers() {
-        viewModel.getCurrentTunnelState().observe(lifecycleOwner) { state ->
-            tunnelIsUp = state == Tunnel.State.UP
-        }
-        viewModel.getCurrentCountryCode().observe(lifecycleOwner) { countryCode ->
-            val newList = countriesList.map { country ->
-                country.copy(
-                    isChecked =
-                    country.code == countryCode && tunnelIsUp
-                )
-            }
-            countriesAdapter.submitList(newList)
-        }
+//        viewModel.getCurrentTunnelState().observe(lifecycleOwner) { state ->
+//            tunnelIsUp = state == Tunnel.State.UP
+//        }
+//        viewModel.getCurrentCountryCode().observe(lifecycleOwner) { countryCode ->
+//            val newList = countriesList.map { country ->
+//                country.copy(
+//                    isChecked =
+//                    country.code == countryCode && tunnelIsUp
+//                )
+//            }
+//            countriesAdapter.submitList(newList)
+//        }
     }
 
     private fun setupRecycler() {

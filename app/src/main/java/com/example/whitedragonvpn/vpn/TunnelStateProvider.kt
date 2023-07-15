@@ -1,6 +1,10 @@
 package com.example.whitedragonvpn.vpn
 
-class TunnelStateProvider(private val tunnel: WgTunnel) {
+import com.example.whitedragonvpn.ioc.ApplicationScope
+import javax.inject.Inject
+
+@ApplicationScope
+class TunnelStateProvider @Inject constructor(private val tunnel: WgTunnel) {
     fun getStateObservable() = tunnel.state
     fun getCurrentCountryObservable() = tunnel.currentCountryObservable
 }

@@ -2,9 +2,12 @@ package com.example.whitedragonvpn.vpn
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.wireguard.android.backend.Tunnel
+import javax.inject.Inject
 
-class WgTunnel : Tunnel {
+@ApplicationScope
+class WgTunnel @Inject constructor() : Tunnel {
     private val _state = MutableLiveData(Tunnel.State.DOWN)
     val state: LiveData<Tunnel.State> = _state
 

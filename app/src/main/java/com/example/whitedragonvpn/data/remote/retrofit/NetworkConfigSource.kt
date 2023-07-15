@@ -1,12 +1,15 @@
 package com.example.whitedragonvpn.data.remote.retrofit
 
 import com.example.whitedragonvpn.data.model.ConfigModel
+import com.example.whitedragonvpn.ioc.ApplicationScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
+import javax.inject.Inject
 
 @ExperimentalSerializationApi
-class NetworkConfigSource {
+@ApplicationScope
+class NetworkConfigSource @Inject constructor() {
     suspend fun getConfig(countryCode: String): ConfigModel =
         withContext(Dispatchers.IO) {
             val response = RetrofitModule.configApi.getConfiguration(countryCode)
