@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.databinding.FragmentBaseBinding
-import com.example.whitedragonvpn.ioc.BaseFragmentComponent
-import com.example.whitedragonvpn.ioc.BaseFragmentViewComponent
+import com.example.whitedragonvpn.ui.base_fragment.ioc.BaseFragmentComponent
+import com.example.whitedragonvpn.ui.base_fragment.ioc.BaseFragmentViewComponent
+import com.example.whitedragonvpn.ui.base_fragment.ioc.DaggerBaseFragmentComponent
+import com.example.whitedragonvpn.ui.base_fragment.ioc.DaggerBaseFragmentViewComponent
 import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 
 class BaseFragment : Fragment() {
@@ -26,12 +28,8 @@ class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        fragmentComponent = BaseFragmentComponent(
-            applicationComponent,
-            this,
-            viewModel
-        )
+        fragmentComponent = DaggerBaseFragmentComponent.factory()
+            .create(fragment = this)
     }
 
     override fun onCreateView(
@@ -41,11 +39,12 @@ class BaseFragment : Fragment() {
 
         _binding = FragmentBaseBinding.inflate(inflater, container, false)
 
-        fragmentViewComponent =
-            BaseFragmentViewComponent(fragmentComponent, binding, viewLifecycleOwner)
-                .apply {
-                    baseViewController.setupViews()
-                }
+
+        fragmentViewComponent = DaggerBaseFragmentViewComponent.factory()
+            .create(fragmentComponent, binding, viewLifecycleOwner)
+            .apply {
+                baseFragmentViewController.setupViews()
+            }
 
         return binding.root
 
