@@ -14,19 +14,20 @@ import com.example.whitedragonvpn.ui.countries_fragment.recycler.CountriesViewHo
 import com.example.whitedragonvpn.ui.shared_components.VpnConnectionSwitch
 import com.example.whitedragonvpn.utils.px
 import com.wireguard.android.backend.Tunnel
+import javax.inject.Inject
 
-class CountriesFragmentController(
+class CountriesFragmentController @Inject constructor(
     private val activity: Activity,
     private val viewBinding: FragmentCountriesBinding,
     private val lifecycleOwner: LifecycleOwner,
-//    private val viewModel: BaseViewModel
+    private val viewModel: BaseViewModel
 ) {
 
     private val connectionSwitch: VpnConnectionSwitch = activity as VpnConnectionSwitch
-    lateinit var countriesRecyclerView: RecyclerView
-    lateinit var countriesAdapter: ListAdapter<CountryItem, CountriesViewHolder>
-    var tunnelIsUp: Boolean = false
-    val countriesList = listOf(
+    private lateinit var countriesRecyclerView: RecyclerView
+    private lateinit var countriesAdapter: ListAdapter<CountryItem, CountriesViewHolder>
+    private var tunnelIsUp: Boolean = false
+    private val countriesList = listOf(
         CountryItem("Netherlands", "ne", false),
         CountryItem("Russia", "ru", false),
         CountryItem("USA", "us", false),
@@ -39,18 +40,18 @@ class CountriesFragmentController(
     }
 
     private fun setupObservers() {
-//        viewModel.getCurrentTunnelState().observe(lifecycleOwner) { state ->
-//            tunnelIsUp = state == Tunnel.State.UP
-//        }
-//        viewModel.getCurrentCountryCode().observe(lifecycleOwner) { countryCode ->
-//            val newList = countriesList.map { country ->
-//                country.copy(
-//                    isChecked =
-//                    country.code == countryCode && tunnelIsUp
-//                )
-//            }
-//            countriesAdapter.submitList(newList)
-//        }
+        viewModel.getCurrentTunnelState().observe(lifecycleOwner) { state ->
+            tunnelIsUp = state == Tunnel.State.UP
+        }
+        viewModel.getCurrentCountryCode().observe(lifecycleOwner) { countryCode ->
+            val newList = countriesList.map { country ->
+                country.copy(
+                    isChecked =
+                    country.code == countryCode && tunnelIsUp
+                )
+            }
+            countriesAdapter.submitList(newList)
+        }
     }
 
     private fun setupRecycler() {
