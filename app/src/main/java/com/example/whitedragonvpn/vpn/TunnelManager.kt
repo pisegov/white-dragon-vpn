@@ -56,7 +56,10 @@ class TunnelManager @Inject constructor(
                 config
             )
             RetrofitModule.clearConnectionPool()
-            tunnel.updateCountryCode(countryCode)
+            config?.let {
+                tunnel.updateCountryCode(countryCode)
+            }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

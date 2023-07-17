@@ -41,9 +41,14 @@ class MainActivity : AppCompatActivity(),
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        NetworkErrorHolder.error.observe(this) {
-            val error = it as NetworkResult.GenericError
-            Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            NetworkErrorHolder.error.collect {
+                it?.let {
+                    val error = it as NetworkResult.GenericError
+                    Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
+                    NetworkErrorHolder.setError(null)
+                }
+            }
         }
     }
 
