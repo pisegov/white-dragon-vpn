@@ -1,7 +1,9 @@
 package com.example.whitedragonvpn.ui.countries_fragment
 
 import android.app.Activity
+import android.widget.CompoundButton
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,10 @@ import com.example.whitedragonvpn.ui.countries_fragment.recycler.CountriesViewHo
 import com.example.whitedragonvpn.ui.shared_components.VpnConnectionSwitch
 import com.example.whitedragonvpn.utils.px
 import com.wireguard.android.backend.Tunnel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class CountriesFragmentController @Inject constructor(
@@ -26,12 +32,19 @@ class CountriesFragmentController @Inject constructor(
     private val connectionSwitch: VpnConnectionSwitch = activity as VpnConnectionSwitch
     private lateinit var countriesRecyclerView: RecyclerView
     private lateinit var countriesAdapter: ListAdapter<CountryItem, CountriesViewHolder>
-    private var tunnelIsUp: Boolean = false
+    private val stateUpdateMutex = Mutex()
+    private var tunnelIsUp = AtomicBoolean(false)
+    private lateinit var currentCountry: String
+
     private val countriesList = listOf(
         CountryItem("Netherlands", "ne", false),
         CountryItem("Russia", "ru", false),
         CountryItem("USA", "us", false),
         CountryItem("Georgia", "ge", false),
+    )
+    private val stateMap = mapOf<Boolean, Tunnel.State>(
+        true to Tunnel.State.UP,
+        false to Tunnel.State.DOWN
     )
 
     fun setupViews() {
@@ -40,37 +53,28 @@ class CountriesFragmentController @Inject constructor(
     }
 
     private fun setupObservers() {
-        viewModel.getCurrentTunnelState().observe(lifecycleOwner) { state ->
-            tunnelIsUp = state == Tunnel.State.UP
-        }
-        viewModel.getCurrentCountryCode().observe(lifecycleOwner) { countryCode ->
-            val newList = countriesList.map { country ->
-                country.copy(
-                    isChecked =
-                    country.code == countryCode && tunnelIsUp
-                )
+        lifecycleOwner.lifecycleScope.launch {
+            viewModel.getCurrentCountryCode().collect { countryCode ->
+                stateUpdateMutex.withLock { currentCountry = countryCode }
+                updateCountriesList()
             }
-            countriesAdapter.submitList(newList)
+        }
+        lifecycleOwner.lifecycleScope.launch {
+            viewModel.getCurrentTunnelState().collect { state ->
+                tunnelIsUp.getAndSet(state == Tunnel.State.UP)
+                updateCountriesList()
+            }
         }
     }
 
     private fun setupRecycler() {
         countriesRecyclerView = viewBinding.rwCountriesRecycler
 
-        val switchListener: (item: CountryItem, state: Boolean) -> Unit = { item, state ->
-            val stateMap = mapOf<Boolean, Tunnel.State>(
-                true to Tunnel.State.UP,
-                false to Tunnel.State.DOWN
-            )
-            val newList = countriesList.map { country ->
-                country.copy(
-                    isChecked =
-                    country.code == item.code
-                )
+        val switchListener: (switch: CompoundButton, item: CountryItem, state: Boolean) -> Unit =
+            { switch, item, state ->
+                switch.isChecked = false
+                connectionSwitch.onSwitchClicked(state = stateMap[state]!!, countryCode = item.code)
             }
-            countriesAdapter.submitList(newList)
-            connectionSwitch.onSwitchClicked(stateMap[state]!!, countryCode = item.code)
-        }
 
         countriesAdapter = CountriesAdapter(switchListener)
 
@@ -80,8 +84,15 @@ class CountriesFragmentController @Inject constructor(
                 LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(CountriesOffsetItemDecoration(bottomOffset = 10.px))
         }
-        countriesAdapter.submitList(
-            countriesList
-        )
+    }
+
+    private fun updateCountriesList() {
+        val newList = countriesList.map { countryItem ->
+            countryItem.copy(
+                isChecked =
+                (countryItem.code == currentCountry) && tunnelIsUp.get()
+            )
+        }
+        countriesAdapter.submitList(newList)
     }
 }

@@ -1,27 +1,28 @@
 package com.example.whitedragonvpn.vpn
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.wireguard.android.backend.Tunnel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @ApplicationScope
 class WgTunnel @Inject constructor() : Tunnel {
-    private val _state = MutableLiveData(Tunnel.State.DOWN)
-    val state: LiveData<Tunnel.State> = _state
+    private val _state = MutableStateFlow(Tunnel.State.DOWN)
+    val state: StateFlow<Tunnel.State> = _state
 
-    private val currentCountry = MutableLiveData<String>("ne")
-    val currentCountryObservable: LiveData<String> = currentCountry
+    private val currentCountry = MutableStateFlow<String>("ne")
+    val currentCountryObservable: StateFlow<String> = currentCountry
     override fun getName(): String {
         return "wgpreconf"
     }
 
     override fun onStateChange(newState: Tunnel.State) {
-        _state.postValue(newState)
+        _state.update { newState }
     }
 
     fun updateCountryCode(countryCode: String) {
-        currentCountry.postValue(countryCode)
+        currentCountry.update { countryCode }
     }
 }

@@ -10,7 +10,7 @@ object CountriesDiffCallback : DiffUtil.ItemCallback<CountryItem>() {
     }
 
     override fun areContentsTheSame(oldItem: CountryItem, newItem: CountryItem): Boolean {
-        return oldItem == newItem
+        return oldItem.isChecked == newItem.isChecked
     }
 
     override fun getChangePayload(oldItem: CountryItem, newItem: CountryItem): Any? {

@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 @ApplicationScope
 class TunnelStateProvider @Inject constructor(private val tunnel: WgTunnel) {
-    fun getStateObservable() = tunnel.state
-    fun getCurrentCountryObservable() = tunnel.currentCountryObservable
+    fun getStateFlow() = tunnel.state
+    fun getCurrentCountryFlow() = tunnel.currentCountryObservable
 }
