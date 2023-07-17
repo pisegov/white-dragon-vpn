@@ -1,32 +1,29 @@
 package com.example.whitedragonvpn.ui
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
 import com.example.whitedragonvpn.databinding.ActivityMainBinding
-import com.example.whitedragonvpn.ui.shared_components.VpnConnectionSwitch
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
-import com.wireguard.android.backend.GoBackend
-import com.wireguard.android.backend.Tunnel
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(),
-    VpnConnectionSwitch {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private val applicationComponent
+        get() = App.get(this).applicationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -47,6 +44,14 @@ class MainActivity : AppCompatActivity(),
                     val error = it as NetworkResult.GenericError
                     Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
                     NetworkErrorHolder.setError(null)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            applicationComponent.dialogManager.firstConnectionDialog.collect { intentPrepare ->
+                intentPrepare?.let { intent ->
+                    startActivityIfNeeded(intent, 0)
                 }
             }
         }
@@ -74,27 +79,4 @@ class MainActivity : AppCompatActivity(),
                 || super.onSupportNavigateUp()
     }
 
-    private fun showVpnDialog() {
-        val intentPrepare: Intent? = GoBackend.VpnService.prepare(this)
-        intentPrepare?.let { intent ->
-            startActivityIfNeeded(intent, 0)
-        }
-    }
-
-    private val tunnelLauncher
-        get() = App.get(this).applicationComponent.tunnelLauncher
-
-    override fun onSwitchClicked() {
-        showVpnDialog()
-        lifecycleScope.launch {
-            tunnelLauncher.toggleTunnelState()
-        }
-    }
-
-    override fun onSwitchClicked(state: Tunnel.State, countryCode: String) {
-        showVpnDialog()
-        lifecycleScope.launch {
-            tunnelLauncher.switchTunnelState(state, countryCode)
-        }
-    }
 }

@@ -2,6 +2,7 @@ package com.example.whitedragonvpn.ui.countries_fragment.ioc
 
 import androidx.fragment.app.Fragment
 import com.example.whitedragonvpn.ioc.ApplicationComponent
+import com.example.whitedragonvpn.ui.countries_fragment.recycler.CountriesAdapter
 import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 import dagger.BindsInstance
 import dagger.Component
@@ -20,4 +21,5 @@ interface CountriesFragmentComponent {
 
     fun fragment(): Fragment
     fun viewModel(): BaseViewModel
+    fun adapter(): CountriesAdapter
 }

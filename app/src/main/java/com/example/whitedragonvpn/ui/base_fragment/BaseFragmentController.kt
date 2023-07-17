@@ -8,7 +8,6 @@ import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.databinding.FragmentBaseBinding
 import com.example.whitedragonvpn.ui.base_fragment.model.SwitchButtonState
 import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
-import com.example.whitedragonvpn.ui.shared_components.VpnConnectionSwitch
 import com.wireguard.android.backend.Tunnel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +18,6 @@ class BaseFragmentController @Inject constructor(
     private val lifecycleOwner: LifecycleOwner,
     private val viewModel: BaseViewModel
 ) {
-    private val connectionSwitch: VpnConnectionSwitch = activity as VpnConnectionSwitch
     private val switchButtonStateAdapterMap: Map<Tunnel.State, SwitchButtonState> = mapOf(
         Tunnel.State.UP to SwitchButtonState(
             color = R.color.switch_button_connected,
@@ -35,7 +33,7 @@ class BaseFragmentController @Inject constructor(
 
         val switchButton = viewBinding.buttonFirst
         switchButton.setOnClickListener {
-            connectionSwitch.onSwitchClicked()
+            viewModel.toggleTunnelState()
         }
 
         viewBinding.btnNextFragment.setOnClickListener {

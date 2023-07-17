@@ -1,13 +1,13 @@
 package com.example.whitedragonvpn.ui.countries_fragment.recycler
 
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.whitedragonvpn.databinding.ItemCountryBinding
 import com.example.whitedragonvpn.ui.countries_fragment.model.CountryItem
+import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 
 class CountriesViewHolder(
     private val binding: ItemCountryBinding,
-    private val switchListener: (switch: CompoundButton, item: CountryItem, state: Boolean) -> Unit
+    private val viewModel: BaseViewModel
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -16,7 +16,7 @@ class CountriesViewHolder(
     init {
         binding.switchCountryChecked.setOnCheckedChangeListener { switch, state ->
             if (switch.isPressed) {
-                switchListener(switch, currentCountry, state)
+                viewModel.switchTunnelState(switch, currentCountry, state)
             }
         }
     }

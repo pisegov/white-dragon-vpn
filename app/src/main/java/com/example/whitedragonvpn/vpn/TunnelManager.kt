@@ -4,6 +4,7 @@ import com.example.whitedragonvpn.data.ConfigRepository
 import com.example.whitedragonvpn.data.model.ConfigModel
 import com.example.whitedragonvpn.data.remote.retrofit.RetrofitModule
 import com.example.whitedragonvpn.ioc.ApplicationScope
+import com.example.whitedragonvpn.utils.SystemDialogManager
 import com.wireguard.android.backend.Backend
 import com.wireguard.android.backend.Tunnel
 import com.wireguard.config.Config
@@ -20,12 +21,13 @@ import javax.inject.Inject
 class TunnelManager @Inject constructor(
     private val backend: Backend,
     private val configRepository: ConfigRepository,
-    private val tunnel: WgTunnel
+    private val tunnel: WgTunnel,
+    private val dialogManager: SystemDialogManager,
 ) : TunnelLauncher {
 
     override suspend fun toggleTunnelState(): Unit =
         withContext(Dispatchers.IO) {
-            val countryCode = tunnel.currentCountryObservable.value ?: return@withContext
+            val countryCode = tunnel.currentCountryObservable.value
             val newState = when (tunnel.state.value) {
                 Tunnel.State.DOWN -> Tunnel.State.UP
                 else -> Tunnel.State.DOWN
@@ -49,6 +51,7 @@ class TunnelManager @Inject constructor(
 
     @OptIn(ExperimentalSerializationApi::class)
     private fun setState(state: Tunnel.State, config: Config?, countryCode: String) {
+        dialogManager.makeFirstConnectionDialog()
         try {
             backend.setState(
                 tunnel,

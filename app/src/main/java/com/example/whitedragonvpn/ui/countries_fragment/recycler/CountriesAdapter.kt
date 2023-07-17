@@ -2,12 +2,15 @@ package com.example.whitedragonvpn.ui.countries_fragment.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.ListAdapter
 import com.example.whitedragonvpn.databinding.ItemCountryBinding
+import com.example.whitedragonvpn.ui.countries_fragment.ioc.CountriesFragmentScope
 import com.example.whitedragonvpn.ui.countries_fragment.model.CountryItem
+import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
+import javax.inject.Inject
 
-class CountriesAdapter(private val switchListener: (switch: CompoundButton, item: CountryItem, state: Boolean) -> Unit) :
+@CountriesFragmentScope
+class CountriesAdapter @Inject constructor(private val viewModel: BaseViewModel) :
     ListAdapter<CountryItem, CountriesViewHolder>(CountriesDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountriesViewHolder {
@@ -16,7 +19,7 @@ class CountriesAdapter(private val switchListener: (switch: CompoundButton, item
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), switchListener
+            ), viewModel
         )
     }
 

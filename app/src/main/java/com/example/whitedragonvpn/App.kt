@@ -4,13 +4,16 @@ import android.app.Application
 import android.content.Context
 import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.example.whitedragonvpn.ioc.DaggerApplicationComponent
+import com.example.whitedragonvpn.utils.SystemDialogManager
 import com.wireguard.android.backend.GoBackend
 
 @ApplicationScope
 class App : Application() {
     val applicationComponent by lazy {
         val backend = GoBackend(applicationContext)
-        DaggerApplicationComponent.factory().create(wgBackend = backend)
+        val systemDialogManager = SystemDialogManager(applicationContext)
+        DaggerApplicationComponent.factory()
+            .create(wgBackend = backend, dialogManager = systemDialogManager)
     }
 
     companion object {
