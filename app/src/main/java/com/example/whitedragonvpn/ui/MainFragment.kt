@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.makeText
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -31,6 +33,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             (childFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment)
                 .navController
         bottomNavigationView.setupWithNavController(navController)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, _ ->
+            WindowInsetsCompat.CONSUMED
+        }
 
         lifecycleScope.launch {
             NetworkErrorHolder.error.collect {
