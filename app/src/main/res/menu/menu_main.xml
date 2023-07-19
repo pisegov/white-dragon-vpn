@@ -3,9 +3,23 @@
     tools:context="com.example.whitedragonvpn.ui.MainActivity">
     <item
         android:id="@+id/BaseFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_connect_24"
         android:title="@string/action_base" />
 
     <item
         android:id="@+id/CountriesFragment"
-        android:title="@string/action_countries" />
+        android:enabled="true"
+        android:icon="@drawable/ic_flag_circle_24"
+        android:title="@string/action_countries"
+
+        />
+
+    <item
+        android:id="@+id/SettingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings_24"
+        android:title="@string/action_settings"
+
+        />
 </menu>

@@ -4,5 +4,4 @@
     <color name="white">#f7f7f6</color>
     <color name="primary">@color/black</color>
     <color name="switch_button_connected">#5e75ab</color>
-    <color name="transparent">#00F44336</color>
 </resources>
