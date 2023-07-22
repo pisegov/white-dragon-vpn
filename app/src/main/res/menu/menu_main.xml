@@ -11,15 +11,11 @@
         android:id="@+id/CountriesFragment"
         android:enabled="true"
         android:icon="@drawable/ic_flag_circle_24"
-        android:title="@string/action_countries"
-
-        />
+        android:title="@string/action_countries" />
 
     <item
         android:id="@+id/SettingsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_settings_24"
-        android:title="@string/action_settings"
-
-        />
+        android:title="@string/action_settings" />
 </menu>

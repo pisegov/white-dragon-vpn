@@ -25,4 +25,10 @@
             android:id="@+id/action_CountriesFragment_to_BaseFragment"
             app:destination="@id/BaseFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.example.whitedragonvpn.ui.settings_fragment.SettingsFragment"
+        android:label="@string/settings_fragment_label"
+        tools:layout="@layout/fragment_countries" />
 </navigation>
