@@ -1,9 +1,9 @@
 package com.example.whitedragonvpn.ioc
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.example.whitedragonvpn.utils.SystemDialogManager
 import com.example.whitedragonvpn.vpn.TunnelLauncher
-import com.wireguard.android.backend.Backend
 import dagger.BindsInstance
 import dagger.Component
 
@@ -14,8 +14,7 @@ interface ApplicationComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance wgBackend: Backend,
-            @BindsInstance dialogManager: SystemDialogManager
+            @BindsInstance applicationContext: Context,
         ): ApplicationComponent
     }
 

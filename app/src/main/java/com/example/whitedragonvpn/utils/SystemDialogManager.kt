@@ -7,9 +7,10 @@ import com.wireguard.android.backend.GoBackend
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 @ApplicationScope
-class SystemDialogManager(private val applicationContext: Context) {
+class SystemDialogManager @Inject constructor(private val applicationContext: Context) {
     private val _firstConnectionDialog = MutableStateFlow<Intent?>(null)
     val firstConnectionDialog: StateFlow<Intent?> = _firstConnectionDialog
 
