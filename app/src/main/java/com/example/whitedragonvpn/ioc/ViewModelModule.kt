@@ -2,6 +2,7 @@ package com.example.whitedragonvpn.ioc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.whitedragonvpn.ui.settings_fragment.ioc.SettingsViewModel
 import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 import dagger.Binds
 import dagger.Module
@@ -16,4 +17,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(BaseViewModel::class)
     fun baseViewModel(viewModel: BaseViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    fun settingsViewModel(viewModel: SettingsViewModel): ViewModel
 }
