@@ -1,7 +1,7 @@
 package com.example.whitedragonvpn.ui.settings_fragment.ioc
 
 import androidx.lifecycle.LifecycleOwner
-import com.example.whitedragonvpn.databinding.FragmentSettingsBinding
+import androidx.preference.PreferenceManager
 import com.example.whitedragonvpn.ui.settings_fragment.SettingsFragmentViewController
 import dagger.BindsInstance
 import dagger.Component
@@ -16,7 +16,7 @@ interface SettingsFragmentViewComponent {
     interface Factory {
         fun create(
             fragmentComponent: SettingsFragmentComponent,
-            @BindsInstance viewBinding: FragmentSettingsBinding,
+            @BindsInstance preferenceManager: PreferenceManager,
             @BindsInstance lifecycleOwner: LifecycleOwner
         ): SettingsFragmentViewComponent
     }

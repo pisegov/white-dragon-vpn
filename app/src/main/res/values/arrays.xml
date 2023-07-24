@@ -1,0 +1,23 @@
+<resources>
+    <!-- Protocol Preference -->
+    <string-array name="protocol_entries">
+        <item>WireGuard</item>
+        <item>Open VPN</item>
+    </string-array>
+
+    <string-array name="protocol_values">
+        <item>wireguard</item>
+        <item>open_vpn</item>
+    </string-array>
+
+    <!-- App Language Preference -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Russian</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>en</item>
+        <item>ru</item>
+    </string-array>
+</resources>

@@ -17,7 +17,5 @@ interface SettingsFragmentComponent {
         ): SettingsFragmentComponent
     }
 
-    fun fragment(): Fragment
-
     fun viewModel(): SettingsViewModel
 }

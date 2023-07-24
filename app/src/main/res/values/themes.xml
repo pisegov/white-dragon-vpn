@@ -8,6 +8,7 @@
         <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.App.Preference</item>
     </style>
 
     <style name="Theme.WhiteDragonVPN" parent="Base.Theme.WhiteDragonVPN" />
@@ -30,5 +31,13 @@
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorOnSurfaceVariant">@color/primary</item>
         <item name="colorOnSecondaryContainer">@color/switch_button_connected</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Preference" parent="PreferenceThemeOverlay">
+        <item name="switchPreferenceCompatStyle">@style/PreferenceMaterialSwitch</item>
+    </style>
+
+    <style name="PreferenceMaterialSwitch" parent="@style/Preference.SwitchPreferenceCompat.Material">
+        <item name="widgetLayout">@layout/preference_switch</item>
     </style>
 </resources>

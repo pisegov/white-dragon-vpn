@@ -8,6 +8,7 @@
         <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.App.Preference</item>
     </style>
 
     <style name="Theme.WhiteDragonVPN" parent="Base.Night.WhiteDragonVPN" />

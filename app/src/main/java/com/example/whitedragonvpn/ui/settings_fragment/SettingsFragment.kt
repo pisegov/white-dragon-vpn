@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceFragmentCompat
 import com.example.whitedragonvpn.App
-import com.example.whitedragonvpn.databinding.FragmentSettingsBinding
+import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.ioc.ApplicationComponent
 import com.example.whitedragonvpn.ui.settings_fragment.ioc.DaggerSettingsFragmentComponent
 import com.example.whitedragonvpn.ui.settings_fragment.ioc.DaggerSettingsFragmentViewComponent
@@ -17,10 +17,7 @@ import com.example.whitedragonvpn.ui.settings_fragment.ioc.SettingsFragmentViewC
 import com.example.whitedragonvpn.ui.settings_fragment.ioc.SettingsViewModel
 import kotlinx.coroutines.launch
 
-class SettingsFragment : Fragment() {
-
-    private var _binding: FragmentSettingsBinding? = null
-    private val binding get() = _binding!!
+class SettingsFragment : PreferenceFragmentCompat() {
 
     private val applicationComponent: ApplicationComponent
         get() = App.get(requireContext()).applicationComponent
@@ -29,8 +26,9 @@ class SettingsFragment : Fragment() {
     private lateinit var fragmentViewComponent: SettingsFragmentViewComponent
 
     private val viewModel by viewModels<SettingsViewModel> { applicationComponent.viewModelFactory }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.root_preferences, rootKey)
         fragmentComponent = DaggerSettingsFragmentComponent.factory().create(
             applicationComponent,
             this,
@@ -43,24 +41,15 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-
         fragmentViewComponent = DaggerSettingsFragmentViewComponent.factory().create(
             fragmentComponent,
-            binding,
+            preferenceManager,
             viewLifecycleOwner
         ).apply {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewController.setupViews()
+                viewController.setupPreferences()
             }
         }
-
-        return binding.root
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 }
