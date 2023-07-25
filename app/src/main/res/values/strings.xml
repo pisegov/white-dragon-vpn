@@ -8,6 +8,9 @@
 
     <string name="connect">Connect</string>
     <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+
+    <string name="todo">*TODO*</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -56,4 +59,8 @@
     <string name="use_home_country_summary_off">Quick connect button is not divided into two to connect to the home or the favourite country</string>
     <string name="use_home_country_summary_on">Quick connect button is divided into two to connect to the home or the favourite country</string>
     <string name="application_language">Application language</string>
+    <string name="connection_status">Connection status</string>
+    <string name="country_status">Country</string>
+    <string name="ip_address_status">IP address</string>
+    <string name="property_value_string">%1$s: %2$s</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.whitedragonvpn.ui.base_fragment
 
 import android.app.Activity
+import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.example.whitedragonvpn.R
@@ -43,6 +45,56 @@ class BaseFragmentController @Inject constructor(
                         setText(buttonState.stringId)
                     }
                 }
+                changeConnectionStatus(state == Tunnel.State.UP)
+            }
+        }
+    }
+
+    private fun changeConnectionStatus(isConnected: Boolean) {
+        val container = viewBinding.connectionStatusContainer
+        val connection = viewBinding.connectionStatusString
+        val ip = viewBinding.ipStatusString
+        val country = viewBinding.countryStatusString
+
+        if (isConnected) {
+            container.background =
+                AppCompatResources.getDrawable(activity, R.drawable.status_background_connected)
+            connection.text =
+                activity.getString(
+                    R.string.property_value_string,
+                    activity.getString(R.string.connection_status),
+                    activity.getString(R.string.connected)
+                )
+            ip.apply {
+                visibility = View.VISIBLE
+                text = activity.getString(
+                    R.string.property_value_string,
+                    activity.getString(R.string.ip_address_status),
+                    activity.getString(R.string.todo)
+                )
+            }
+            country.apply {
+                visibility = View.VISIBLE
+                text = activity.getString(
+                    R.string.property_value_string,
+                    activity.getString(R.string.country_status),
+                    activity.getString(R.string.todo)
+                )
+            }
+        } else {
+            container.background =
+                AppCompatResources.getDrawable(activity, R.drawable.status_background_disconnected)
+            connection.text =
+                activity.getString(
+                    R.string.property_value_string,
+                    activity.getString(R.string.connection_status),
+                    activity.getString(R.string.disconnected)
+                )
+            ip.apply {
+                visibility = View.GONE
+            }
+            country.apply {
+                visibility = View.GONE
             }
         }
     }

@@ -7,6 +7,43 @@
     android:padding="16dp"
     tools:context=".ui.base_fragment.BaseFragment">
 
+    <LinearLayout
+        android:id="@+id/connectionStatusContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/status_background_disconnected"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/connectionStatusString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connection_status"
+            android:textAppearance="@style/StatusTextStyle" />
+
+        <TextView
+            android:id="@+id/countryStatusString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/country_status"
+            android:textAppearance="@style/StatusTextStyle" />
+
+        <TextView
+            android:id="@+id/ipStatusString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ip_address_status"
+            android:textAppearance="@style/StatusTextStyle" />
+
+
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/button_first"
         android:layout_width="wrap_content"
