@@ -1,6 +1,8 @@
 package com.example.whitedragonvpn.ioc
 
 import android.content.Context
+import com.example.whitedragonvpn.data.resources.AndroidResourceProvider
+import com.example.whitedragonvpn.data.resources.ResourceProvider
 import com.example.whitedragonvpn.data.settings.store.SettingsRepository
 import com.example.whitedragonvpn.utils.datastore
 import com.example.whitedragonvpn.vpn.TunnelLauncher
@@ -16,6 +18,10 @@ interface ApplicationModule {
     @Binds
     @ApplicationScope
     fun tunnelLauncher(impl: TunnelManager): TunnelLauncher
+
+    @Binds
+    @ApplicationScope
+    fun resourceProvider(impl: AndroidResourceProvider): ResourceProvider
 
     companion object {
         @Provides

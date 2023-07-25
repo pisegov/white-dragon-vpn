@@ -12,11 +12,13 @@
 
     <!-- App Language Preference -->
     <string-array name="language_entries">
+        <item>System language</item>
         <item>English</item>
         <item>Russian</item>
     </string-array>
 
     <string-array name="language_values">
+        <item>sys</item>
         <item>en</item>
         <item>ru</item>
     </string-array>
