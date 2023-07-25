@@ -1,4 +1,4 @@
-package com.example.whitedragonvpn.data.remote.retrofit.model
+package com.example.whitedragonvpn.data.countries.remote
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

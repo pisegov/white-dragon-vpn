@@ -1,8 +1,8 @@
-package com.example.whitedragonvpn.data
+package com.example.whitedragonvpn.data.config
 
-import com.example.whitedragonvpn.data.model.ConfigModel
-import com.example.whitedragonvpn.data.remote.retrofit.NetworkConfigSource
-import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
+import com.example.whitedragonvpn.data.Repository
+import com.example.whitedragonvpn.data.config.remote.NetworkConfigSource
+import com.example.whitedragonvpn.data.remote.retrofit.NetworkResult
 import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
 import kotlinx.serialization.ExperimentalSerializationApi

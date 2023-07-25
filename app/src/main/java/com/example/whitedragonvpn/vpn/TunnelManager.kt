@@ -1,7 +1,7 @@
 package com.example.whitedragonvpn.vpn
 
-import com.example.whitedragonvpn.data.ConfigRepository
-import com.example.whitedragonvpn.data.model.ConfigModel
+import com.example.whitedragonvpn.data.config.ConfigRepository
+import com.example.whitedragonvpn.data.config.ConfigModel
 import com.example.whitedragonvpn.data.remote.retrofit.RetrofitModule
 import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.example.whitedragonvpn.utils.SystemDialogManager

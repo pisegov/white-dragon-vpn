@@ -1,4 +1,4 @@
-package com.example.whitedragonvpn.data.remote.retrofit.model
+package com.example.whitedragonvpn.data.remote.retrofit
 
 sealed class NetworkResult<out T : Any> {
     data class Success<out T : Any>(val data: T) : NetworkResult<T>()

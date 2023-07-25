@@ -1,6 +1,5 @@
-package com.example.whitedragonvpn.data.remote.retrofit
+package com.example.whitedragonvpn.data.config.remote
 
-import com.example.whitedragonvpn.data.remote.retrofit.model.ConfigResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -1,4 +1,4 @@
-package com.example.whitedragonvpn.data.model
+package com.example.whitedragonvpn.data.config
 
 data class ConfigModel(
     val address: String,

@@ -2,8 +2,7 @@ package com.example.whitedragonvpn.data.countries
 
 import com.example.whitedragonvpn.data.Repository
 import com.example.whitedragonvpn.data.countries.remote.NetworkCountriesSource
-import com.example.whitedragonvpn.data.model.CountryModel
-import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
+import com.example.whitedragonvpn.data.remote.retrofit.NetworkResult
 import com.example.whitedragonvpn.data.resources.ResourceProvider
 import com.example.whitedragonvpn.data.settings.store.SettingsRepository
 import com.example.whitedragonvpn.ioc.ApplicationScope

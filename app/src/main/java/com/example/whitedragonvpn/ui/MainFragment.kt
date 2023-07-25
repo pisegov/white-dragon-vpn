@@ -13,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.R
-import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
+import com.example.whitedragonvpn.data.remote.retrofit.NetworkResult
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch

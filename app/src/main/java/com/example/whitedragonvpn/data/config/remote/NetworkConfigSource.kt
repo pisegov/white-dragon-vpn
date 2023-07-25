@@ -1,6 +1,7 @@
-package com.example.whitedragonvpn.data.remote.retrofit
+package com.example.whitedragonvpn.data.config.remote
 
-import com.example.whitedragonvpn.data.model.ConfigModel
+import com.example.whitedragonvpn.data.config.ConfigModel
+import com.example.whitedragonvpn.data.remote.retrofit.RetrofitModule
 import com.example.whitedragonvpn.ioc.ApplicationScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

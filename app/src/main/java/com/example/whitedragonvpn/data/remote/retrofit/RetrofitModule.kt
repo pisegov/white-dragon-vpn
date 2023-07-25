@@ -1,6 +1,7 @@
 package com.example.whitedragonvpn.data.remote.retrofit
 
 import com.example.whitedragonvpn.BuildConfig
+import com.example.whitedragonvpn.data.config.remote.ConfigApi
 import com.example.whitedragonvpn.data.countries.remote.CountriesApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi

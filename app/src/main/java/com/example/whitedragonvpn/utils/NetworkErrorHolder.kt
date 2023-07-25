@@ -1,7 +1,7 @@
 package com.example.whitedragonvpn.utils
 
-import com.example.whitedragonvpn.data.model.ConfigModel
-import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
+import com.example.whitedragonvpn.data.config.ConfigModel
+import com.example.whitedragonvpn.data.remote.retrofit.NetworkResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

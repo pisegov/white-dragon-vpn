@@ -1,6 +1,6 @@
 package com.example.whitedragonvpn.data.countries.remote
 
-import com.example.whitedragonvpn.data.model.CountryModel
+import com.example.whitedragonvpn.data.countries.CountryModel
 import com.example.whitedragonvpn.data.remote.retrofit.RetrofitModule
 import com.example.whitedragonvpn.ioc.ApplicationScope
 import kotlinx.coroutines.Dispatchers

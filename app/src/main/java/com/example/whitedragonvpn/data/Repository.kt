@@ -1,6 +1,6 @@
 package com.example.whitedragonvpn.data
 
-import com.example.whitedragonvpn.data.remote.retrofit.model.NetworkResult
+import com.example.whitedragonvpn.data.remote.retrofit.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
