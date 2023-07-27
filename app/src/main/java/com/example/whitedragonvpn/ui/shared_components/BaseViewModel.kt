@@ -20,8 +20,7 @@ class BaseViewModel @Inject constructor(
         false to Tunnel.State.DOWN
     )
 
-    fun getCurrentTunnelState() = stateProvider.getStateFlow()
-    fun getCurrentCountryCode() = stateProvider.getCurrentCountryFlow()
+    fun getConnectionState() = stateProvider.getConnectionStateFlow()
 
     fun toggleTunnelState() {
         viewModelScope.launch {

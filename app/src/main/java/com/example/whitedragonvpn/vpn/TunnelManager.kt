@@ -1,7 +1,7 @@
 package com.example.whitedragonvpn.vpn
 
-import com.example.whitedragonvpn.data.config.ConfigRepository
 import com.example.whitedragonvpn.data.config.ConfigModel
+import com.example.whitedragonvpn.data.config.ConfigRepository
 import com.example.whitedragonvpn.data.remote.retrofit.RetrofitModule
 import com.example.whitedragonvpn.ioc.ApplicationScope
 import com.example.whitedragonvpn.utils.SystemDialogManager
@@ -27,8 +27,8 @@ class TunnelManager @Inject constructor(
 
     override suspend fun toggleTunnelState(): Unit =
         withContext(Dispatchers.IO) {
-            val countryCode = tunnel.currentCountryObservable.value
-            val newState = when (tunnel.state.value) {
+            val countryCode = tunnel.connectionState.value.countryCode
+            val newState = when (tunnel.connectionState.value.state) {
                 Tunnel.State.DOWN -> Tunnel.State.UP
                 else -> Tunnel.State.DOWN
             }

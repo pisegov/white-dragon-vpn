@@ -13,9 +13,6 @@ import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
 import com.example.whitedragonvpn.utils.px
 import com.wireguard.android.backend.Tunnel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class CountriesFragmentController @Inject constructor(
@@ -27,10 +24,6 @@ class CountriesFragmentController @Inject constructor(
 ) {
 
     private lateinit var countriesRecyclerView: RecyclerView
-
-    private val stateUpdateMutex = Mutex()
-    private var tunnelIsUp = AtomicBoolean(false)
-    private lateinit var currentCountry: String
 
     private val countriesList = listOf(
         CountryItem("Netherlands", "ne", false),
@@ -46,15 +39,11 @@ class CountriesFragmentController @Inject constructor(
 
     private fun setupObservers() {
         lifecycleOwner.lifecycleScope.launch {
-            viewModel.getCurrentCountryCode().collect { countryCode ->
-                stateUpdateMutex.withLock { currentCountry = countryCode }
-                updateCountriesList()
-            }
-        }
-        lifecycleOwner.lifecycleScope.launch {
-            viewModel.getCurrentTunnelState().collect { state ->
-                tunnelIsUp.getAndSet(state == Tunnel.State.UP)
-                updateCountriesList()
+            viewModel.getConnectionState().collect { connectionState ->
+                updateCountriesList(
+                    connectionState.state == Tunnel.State.UP,
+                    connectionState.countryCode
+                )
             }
         }
     }
@@ -70,11 +59,11 @@ class CountriesFragmentController @Inject constructor(
         }
     }
 
-    private fun updateCountriesList() {
+    private fun updateCountriesList(tunnelIsUp: Boolean, currentCountry: String) {
         val newList = countriesList.map { countryItem ->
             countryItem.copy(
                 isChecked =
-                (countryItem.code == currentCountry) && tunnelIsUp.get()
+                (countryItem.code == currentCountry) && tunnelIsUp
             )
         }
         countriesAdapter.submitList(newList)

@@ -9,20 +9,19 @@ import javax.inject.Inject
 
 @ApplicationScope
 class WgTunnel @Inject constructor() : Tunnel {
-    private val _state = MutableStateFlow(Tunnel.State.DOWN)
-    val state: StateFlow<Tunnel.State> = _state
 
-    private val currentCountry = MutableStateFlow<String>("ne")
-    val currentCountryObservable: StateFlow<String> = currentCountry
+    private val _connectionState =
+        MutableStateFlow<ConnectionState>(ConnectionState(Tunnel.State.DOWN, "ne"))
+    val connectionState: StateFlow<ConnectionState> = _connectionState
     override fun getName(): String {
         return "wgpreconf"
     }
 
     override fun onStateChange(newState: Tunnel.State) {
-        _state.update { newState }
+        _connectionState.update { ConnectionState(newState, it.countryCode) }
     }
 
     fun updateCountryCode(countryCode: String) {
-        currentCountry.update { countryCode }
+        _connectionState.update { ConnectionState(it.state, countryCode) }
     }
 }

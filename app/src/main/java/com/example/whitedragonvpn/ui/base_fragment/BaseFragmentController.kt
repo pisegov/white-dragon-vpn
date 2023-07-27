@@ -38,14 +38,14 @@ class BaseFragmentController @Inject constructor(
         }
 
         lifecycleOwner.lifecycleScope.launch {
-            viewModel.getCurrentTunnelState().collect { state ->
-                switchButtonStateAdapterMap[state]?.let { buttonState ->
+            viewModel.getConnectionState().collect { connectionState ->
+                switchButtonStateAdapterMap[connectionState.state]?.let { buttonState ->
                     switchButton.apply {
                         setBackgroundColor(resources.getColor(buttonState.color, activity.theme))
                         setText(buttonState.stringId)
                     }
                 }
-                changeConnectionStatus(state == Tunnel.State.UP)
+                changeConnectionStatus(connectionState.state == Tunnel.State.UP)
             }
         }
     }
