@@ -1,9 +1,7 @@
 package com.example.whitedragonvpn.ui.settings_fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceFragmentCompat
@@ -36,11 +34,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         fragmentViewComponent = DaggerSettingsFragmentViewComponent.factory().create(
             fragmentComponent,
             preferenceManager,
@@ -50,6 +45,5 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 viewController.setupPreferences()
             }
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 }

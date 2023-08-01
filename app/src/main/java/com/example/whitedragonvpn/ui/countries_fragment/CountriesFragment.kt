@@ -1,24 +1,22 @@
 package com.example.whitedragonvpn.ui.countries_fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.whitedragonvpn.App
+import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.databinding.FragmentCountriesBinding
 import com.example.whitedragonvpn.ui.countries_fragment.ioc.CountriesFragmentComponent
 import com.example.whitedragonvpn.ui.countries_fragment.ioc.CountriesFragmentViewComponent
 import com.example.whitedragonvpn.ui.countries_fragment.ioc.DaggerCountriesFragmentComponent
 import com.example.whitedragonvpn.ui.countries_fragment.ioc.DaggerCountriesFragmentViewComponent
 import com.example.whitedragonvpn.ui.shared_components.BaseViewModel
+import com.example.whitedragonvpn.ui.viewBinding
 
-class CountriesFragment : Fragment() {
+class CountriesFragment : Fragment(R.layout.fragment_countries) {
 
-    private var _binding: FragmentCountriesBinding? = null
-
-    private val binding get() = _binding!!
+    private val binding by viewBinding { FragmentCountriesBinding.bind(it) }
 
     private val applicationComponent
         get() = App.get(requireContext()).applicationComponent
@@ -33,11 +31,8 @@ class CountriesFragment : Fragment() {
             .create(applicationComponent, this, viewModel)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCountriesBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         fragmentViewComponent =
             DaggerCountriesFragmentViewComponent.factory().create(
@@ -45,12 +40,5 @@ class CountriesFragment : Fragment() {
             ).apply {
                 countriesViewController.setupViews()
             }
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

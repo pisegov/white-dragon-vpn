@@ -1,7 +1,6 @@
 package com.example.whitedragonvpn.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.makeText
@@ -14,11 +13,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.whitedragonvpn.App
 import com.example.whitedragonvpn.R
 import com.example.whitedragonvpn.data.remote.retrofit.NetworkResult
+import com.example.whitedragonvpn.databinding.FragmentMainBinding
 import com.example.whitedragonvpn.utils.NetworkErrorHolder
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment(R.layout.fragment_main) {
+    private val binding by viewBinding { FragmentMainBinding.bind(it) }
     private val applicationComponent
         get() = App.get(requireContext()).applicationComponent
 
@@ -26,13 +26,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("MainFragment", "onViewCreated()")
-        val bottomNavigationView =
-            view.findViewById<BottomNavigationView>(R.id.mainBottomNavigationView)
         val navController =
-            (childFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment)
+            binding.navHostFragmentContentMain.getFragment<NavHostFragment>()
                 .navController
-        bottomNavigationView.setupWithNavController(navController)
+        binding.mainBottomNavigationView.setupWithNavController(navController)
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, _ ->
             WindowInsetsCompat.CONSUMED
         }
