@@ -1,0 +1,57 @@
+#+title: White Dragon VPN android client
+
+Android клиент для сервиса WhiteDragon VPN, построенного на базе [[https://www.wireguard.com/][Wireguard]]
+
+#+html: <a href>
+#+html:   <img src="assets/screencast.gif" width="180"/>
+#+html: </a>
+#+html: <a href>
+#+html:   <img src="assets/screenshot-1.png" width="180"/>
+#+html:   <img src="assets/screenshot-2.png" width="180"/>
+#+html:   <img src="assets/screenshot-3.png" width="180"/>
+#+html:   <img src="assets/screenshot-4.png" width="180"/>
+#+html:   <img src="assets/screenshot-5.png" width="180"/>
+#+html:   <img src="assets/screenshot-6.png" width="180"/>
+#+html:   <img src="assets/screenshot-7.png" width="180"/>
+#+html:   <img src="assets/screenshot-8.png" width="180"/>
+#+html: </a>
+
+
+* Возможности
+** Реализовано
+- Подключение к wireguard туннелю на основе полученной с сервера конфигурации
+- Кнопка быстрого подключения к последней доступной стране
+- Отображение списка доступных стран со свитчами для подключения
+- Экран настроек с сохранением значений параметров в proto datastore
+- Нижняя панель навигации
+- Отображение статуса подключения на главном экране
+
+** *Todo*
+- Получение и кэширование списка доступных стран с соответствующими флагами
+- Отображение страны подключения и текущего ip адреса
+- Использование параметров из настроек
+  - Смена языка
+  - Возможность создания кнопок для быстрого подключения к Избранной и Домашней стране
+  - Выбор протокола подключения: Wireguard или OpenVPN
+- Экран авторизации
+
+* Технологии
+- [[https://git.zx2c4.com/wireguard-android/about/#embedding][Wireguard]]
+- Kotlin
+- Android Architecture Components
+- MVVM
+- Navigation
+- Coroutines
+- Room
+- Proto DataStore
+- Retrofit + Kotlinx Serialization
+- Dagger 2
+- RecyclerView
+- View Binding
+- StateFlow
+- Material Components
+
+* Запуск
+Приложение использует [[https://github.com/pisegov/white-dragon-wg-server][собственный бэкэнд]]
+
+Для запуска проекта необходимо поместить адрес бэкэнда в local.properties в виде BASE_URL = ВАШ_URL
